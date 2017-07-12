@@ -1,0 +1,45 @@
+server:
+  port: 10010
+
+spring:
+  application:
+    name: zuul
+
+
+---
+logging:
+  level:
+    root: INFO
+    org.hibernate: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: INFO
+    org.hibernate.type.descriptor.sql.BasicExtractor: INFO
+
+
+---
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.command.default.execution.isolation.strategy: SEMAPHORE
+hystrix.command.default.fallback.isolation.semaphore.maxConcurrentRequests: 200000
+hystrix.command.default.execution.isolation.semaphore.maxConcurrentRequests: 200000
+#hystrix.command.default.execution.timeout.enabled: true
+hystrix.command.LocationCircuitBreaker.execution.isolation.semaphore.maxConcurrentRequests: 200000
+hystrix.command.LocationCircuitBreaker.fallback.isolation.semaphore.maxConcurrentRequests: 200000
+##hystrix.command.LocationCircuitBreaker.circuitBreaker.forceOpen: true
+#hystrix.command.LocationCircuitBreaker.fallback.enabled: true
+#hystrix.command.LocationCircuitBreaker.circuitBreaker.forceClosed: true
+eureka.default.semaphore.maxSemaphores: 30000
+##hystrix.command.LocationCircuitBreaker.circuitBreaker.errorThresholdPercentage: 50
+##hystrix.command.LocationCircuitBreaker.circuitBreaker.sleepWindowInMilliseconds: 5000
+##hystrix.command.LocationCircuitBreaker.circuitBreaker.requestVolumeThreshold: 20
+hystrix.command.default.execution.isolation.thread.interruptOnTimeout: false
+
+---
+eureka:
+  client:
+    serviceUrl:
+      #defaultZone: http://localhost:8761/eureka
+      defaultZone: http://zh:zh123@39.108.140.53:8761/eureka/
+  instance:
+    #hostname: feign
+    prefer-ip-address: true
+
+
