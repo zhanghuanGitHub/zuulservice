@@ -43,3 +43,34 @@ eureka:
     prefer-ip-address: true
 
 
+ribbon:
+  ConnectTimeout: 10000
+  ReadTimeout: 10000
+  MaxTotalHttpConnections: 5000
+  MaxHttpConnectionsPerHost: 5000
+  ActiveConnectionsLimit: 4000
+  MaxAutoRetries: 1
+  MaxAutoRetriesNextServer: 1
+  OkToRetryOnAllOperations: true
+  okhttp:
+    enabled: true
+
+---
+zuul.hystrix.command.default.execution.isolation.strategy: SEMAPHORE
+zuul.hystrix.command.default.execution.isolation.semaphore.maxConcurrentRequests: 2000
+zuul.hystrix.command.default.fallback.isolation.semaphore.maxConcurrentRequests: 2000
+zuul.eureka.default.semaphore.maxSemaphores: 30000
+zuul.semaphore.maxSemaphores: 30000
+
+
+---
+#路由机制
+#zuul:
+#  ignoredPatterns: /cloud-monitor-server/**, /discovery/**, /**/swagger-ui.html
+#  host:
+#    socket-timeout-millis: 10000
+#    connect-timeout-millis: 10000
+#  routes:
+#    account:                                              # 可以随便写，在zuul上面唯一即可；当这里的值 = service-id时，service-id可以不写。
+#      path: /account/**                                   # 想要映射到的路径
+#      service-id: account    # Eureka中的serviceId
